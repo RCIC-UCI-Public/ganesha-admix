@@ -1,0 +1,49 @@
+---
+- package: NFS Ganesha {{ version }} 
+  name: nfs-ganesha 
+  version_major: "2.7"
+  version: 2.7.3 
+  extension: tar.gz
+  vendor_source: https://download.nfs-ganesha.org/{{version_major}}/LATEST/nfs-ganesha-{{version}}.tar.gz 
+  pkgname: "{{ name }}"
+  ntirpc_version: 1.7.3
+  builddir: builddir
+  addsource:
+    - ntirpc-{{ntirpc_version}}.{{extension}}
+
+  description: >
+    NFS-Ganesha {{ version }} with ntirpc {{ ntirpc_version }}
+  root: "/"
+  prefix: "{{ root }}" 
+
+  # sources need to be added and unpacked so nfs-ganesha use these 
+  addsource: 
+     - ntirpc-{{ ntirpc_version }}.{{ extension }} 
+
+  build:
+    # Build with ntirpc 
+    preconfigure: >
+      mkdir {{ builddir }};
+      cd src/libntirpc; $(TAR) xzf ../../../ntirpc-{{ntirpc_version}}.{{extension}};
+      cd ntirpc-{{ntirpc_version}}; mv *  ..; cd ../../..
+
+    # build c, c++
+    configure: cd {{ builddir }}; cmake ../src 
+    configure_args: 
+    pkgmake: make
+    modules: 
+    target: 
+
+  install:
+    makeinstall: cd {{ builddir }}; $(MAKE) DESTDIR=$(ROOT) install 
+    installextra: cd {{ builddir }}; $(INSTALL) -m 644  README $(ROOT)/{{ prefix}}/README.{{ name }}
+
+  files:
+    - /etc/ganesha
+    - /usr/bin/*
+    - /usr/include/ntirpc
+    - /usr/lib64/ganesha
+    - /usr/lib64/lib*
+    - /usr/lib64/pkgconfig/*
+    - /usr/share/doc/ganesha
+    - /var/run/ganesha

@@ -1,0 +1,17 @@
+autoconf 
+bison 
+ceph-common
+cmake
+doxygen 
+flex
+gcc-c++
+libblkid-devel
+libgssglue-devel 
+libnfsidmap-devel
+libtool 
+nfs-utils*
+nfs-utils-lib-devel 
+openssl-devel 
+python-sphinx
+redhat-lsb 
+xfsprogs-devel
