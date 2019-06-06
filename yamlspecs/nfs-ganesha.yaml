@@ -2,11 +2,11 @@
 - package: NFS Ganesha {{ version }} 
   name: nfs-ganesha 
   version_major: "2.7"
-  version: 2.7.3 
+  version: 2.7.4 
   extension: tar.gz
-  vendor_source: https://download.nfs-ganesha.org/{{version_major}}/LATEST/nfs-ganesha-{{version}}.tar.gz 
+  vendor_source: https://github.com/nfs-ganesha/nfs-ganesha/archive/V{{version}}.tar.gz 
   pkgname: "{{ name }}"
-  ntirpc_version: 1.7.3
+  ntirpc_version: 1.7.4
   builddir: builddir
   addsource:
     - ntirpc-{{ntirpc_version}}.{{extension}}
